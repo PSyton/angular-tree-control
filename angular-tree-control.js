@@ -100,7 +100,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
                     ensureDefault($scope.options, "isLeaf", defaultIsLeaf);
                     ensureDefault($scope.options, "allowDeselect", true);
                     ensureDefault($scope.options, "isSelectable", defaultIsSelectable);
-                  
+
                     $scope.selectedNodes = $scope.selectedNodes || [];
                     $scope.expandedNodes = $scope.expandedNodes || [];
                     $scope.expandedNodesMap = {};
@@ -137,18 +137,29 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
                     };
 
                     $scope.iBranchClass = function() {
-                        if ($scope.expandedNodesMap[this.$id])
-                            return classIfDefined($scope.options.injectClasses.iExpanded);
-                        else
-                            return classIfDefined($scope.options.injectClasses.iCollapsed);
+                        var aClass = "";
+                        if ($scope.options.isLeaf(selectedNode)) {
+                            aClass = "leaf"
+                        } else {
+                            aClass = "folder ";
+                            if ($scope.expandedNodesMap[this.$id])
+                                aClass += classIfDefined($scope.options.injectClasses.iExpanded);
+                            else
+                                aClass += classIfDefined($scope.options.injectClasses.iCollapsed);
+                        }
+                        return aClass;
                     };
 
                     $scope.nodeExpanded = function() {
                         return !!$scope.expandedNodesMap[this.$id];
                     };
 
-                    $scope.selectNodeHead = function() {
+                    $scope.selectNodeHead = function(selectedNode) {
                         var transcludedScope = this;
+                        if ($scope.options.isLeaf(selectedNode)) {
+                            transcludedScope.selectNodeLabel(selectedNode);
+                            return;
+                        }
                         var expanding = $scope.expandedNodesMap[transcludedScope.$id] === undefined;
                         $scope.expandedNodesMap[transcludedScope.$id] = (expanding ? transcludedScope.node : undefined);
                         if (expanding) {
@@ -173,7 +184,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
                         }
                     };
 
-                    $scope.selectNodeLabel = function( selectedNode){
+                    $scope.selectNodeLabel = function(selectedNode){
                         var transcludedScope = this;
                         if(!$scope.options.isLeaf(selectedNode) && (!$scope.options.dirSelectable || !$scope.options.isSelectable(selectedNode))) {
                             // Branch node is not selectable, expand
@@ -244,8 +255,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
                         '<ul '+classIfDefined($scope.options.injectClasses.ul, true)+'>' +
                             '<li ng-repeat="node in node.' + $scope.options.nodeChildren + ' | filter:filterExpression:filterComparator ' + orderBy + '" ng-class="headClass(node)" '+classIfDefined($scope.options.injectClasses.li, true)+
                                'set-node-to-data>' +
-                            '<i class="tree-branch-head" ng-class="iBranchClass()" ng-click="selectNodeHead(node)"></i>' +
-                            '<i class="tree-leaf-head '+classIfDefined($scope.options.injectClasses.iLeaf, false)+'"></i>' +
+                            '<i class="tree-branch" ng-class="iBranchClass(node)" ng-click="selectNodeHead(node)"></i>' +
                             '<div class="tree-label '+classIfDefined($scope.options.injectClasses.label, false)+'" ng-class="[selectedClass(), unselectableClass()]" ng-click="selectNodeLabel(node)" tree-transclude></div>' +
                             '<treeitem ng-if="nodeExpanded()"></treeitem>' +
                             '</li>' +
