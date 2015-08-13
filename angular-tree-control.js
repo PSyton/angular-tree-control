@@ -136,7 +136,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
                             return "tree-collapsed" + injectSelectionClass;
                     };
 
-                    $scope.iBranchClass = function() {
+                    $scope.iBranchClass = function(selectedNode) {
                         var aClass = "";
                         if ($scope.options.isLeaf(selectedNode)) {
                             aClass = "leaf"
