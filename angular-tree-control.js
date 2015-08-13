@@ -188,7 +188,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
                         var transcludedScope = this;
                         if(!$scope.options.isLeaf(selectedNode) && (!$scope.options.dirSelectable || !$scope.options.isSelectable(selectedNode))) {
                             // Branch node is not selectable, expand
-                            this.selectNodeHead();
+                            this.selectNodeHead(selectedNode);
                         }
                         else if($scope.options.isLeaf(selectedNode) && (!$scope.options.isSelectable(selectedNode))) {
                             // Leaf node is not selectable
