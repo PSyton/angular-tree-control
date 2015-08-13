@@ -27,12 +27,11 @@ treecontrol li {
     line-height: 20px;
 }
 
-treecontrol li.tree-expanded i.tree-leaf-head, treecontrol li.tree-collapsed i.tree-leaf-head {display:none;}
-treecontrol li.tree-expanded i.tree-branch-head, treecontrol li.tree-collapsed i.tree-branch-head {display:inline;}
-treecontrol li.tree-leaf i.tree-branch-head {display:none;}
-treecontrol li.tree-leaf i.tree-leaf-head {display:inline;}
+treecontrol li i.tree-branch {
+    display: none;
+}
 
-treecontrol li i.tree-branch-head {
+treecontrol li i.tree-branch {
     cursor: pointer;
 }
 
@@ -45,19 +44,20 @@ treecontrol li .tree-unselectable {
     cursor: not-allowed;
 }
 
-treecontrol.tree-classic li.tree-expanded i.tree-branch-head {
+treecontrol.tree-classic li i.tree-branch.leaf {
+    display: inline;
     padding: 1px 10px;
-    background: url("../images/folder.png") no-repeat;
+    background: url("../images/file.png") no-repeat;
 }
 
-treecontrol.tree-classic li.tree-collapsed i.tree-branch-head {
+treecontrol.tree-classic i.tree-branch.folder {
+    display: inline;
     padding: 1px 10px;
     background: url("../images/folder-closed.png") no-repeat;
 }
 
-treecontrol.tree-classic li.tree-leaf i.tree-leaf-head {
-    padding: 1px 10px;
-    background: url("../images/file.png") no-repeat;
+treecontrol.tree-classic li.tree-expanded > i.tree-branch.folder {
+    background: url("../images/folder.png") no-repeat;
 }
 
 treecontrol.tree-classic li .tree-selected {
@@ -69,20 +69,22 @@ treecontrol.tree-classic li .tree-unselectable {
     color: #ddd;
 }
 
-treecontrol.tree-light li.tree-expanded i.tree-branch-head {
+
+treecontrol.tree-classic li i.tree-branch.leaf {
+    display: inline;
     padding: 1px 10px;
-    background: url("../images/node-opened-2.png") no-repeat;
+    width: 16px; height: 16px;
+    background: none no-repeat;
 }
 
-treecontrol.tree-light li.tree-collapsed i.tree-branch-head {
+treecontrol.tree-classic i.tree-branch.folder {
+    display: inline;
     padding: 1px 10px;
     background: url("../images/node-closed-2.png") no-repeat;
 }
 
-treecontrol.tree-light li.tree-leaf i.tree-leaf-head {
-    padding: 1px 10px;
-    width: 16px; height: 16px;
-    background: none no-repeat;
+treecontrol.tree-classic li.tree-expanded > i.tree-branch.folder {
+    background: url("../images/node-opened-2.png") no-repeat;
 }
 
 treecontrol.tree-light li .tree-selected {

@@ -139,7 +139,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
                     $scope.iBranchClass = function(selectedNode) {
                         var aClass = "";
                         if ($scope.options.isLeaf(selectedNode)) {
-                            aClass = "leaf"
+                            aClass = "leaf " + classIfDefined($scope.options.injectClasses.iLeaf)
                         } else {
                             aClass = "folder ";
                             if ($scope.expandedNodesMap[this.$id])
